@@ -3,4 +3,9 @@ from models import *
 
 def all_Advertisment(request):
     adds = Advertisement.objects.all()
-    return render(request, '')
+
+    return render(request, 'parserAvitoCian/index.html', 
+        {
+        'all_Advertisment':adds
+        }
+    )
