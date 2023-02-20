@@ -14,7 +14,7 @@ from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 from django.urls import reverse
-from parser.parserAvitoCian import views
+from parserAvitoCian import views
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
