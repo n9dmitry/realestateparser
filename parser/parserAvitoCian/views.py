@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from models import *
+from .models import *
 
 def all_Advertisment(request):
     adds = Advertisement.objects.all()
@@ -9,3 +9,5 @@ def all_Advertisment(request):
         'all_Advertisment':adds
         }
     )
+
+

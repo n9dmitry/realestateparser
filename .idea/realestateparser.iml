@@ -9,6 +9,7 @@
     <option name="TEMPLATE_FOLDERS">
       <list>
         <option value="$MODULE_DIR$/parser/parserAvitoCian/templates" />
+        <option value="$MODULE_DIR$/parser/users/templates" />
       </list>
     </option>
   </component>
