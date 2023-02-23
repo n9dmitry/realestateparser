@@ -4,33 +4,36 @@ import time
 
 class get_proxy():
     best_proxies_ru = 'https://best-proxies.ru/proxylist/free/'
-    
+
     def get_random_user_agents(self, count):
         user_agents = []
         response = requests.post(
             'https://user-agents.net/random',
-            data={'limit':str(count), 'action':'generate'},
-            
+            data={'limit':str(count), 'action':'generate'}, 
         )
         
         soup = BeautifulSoup(response.text, 'lxml')
         for li in soup.find('article').find('div').find('ol').find_all('li'):
+        
+            
             user_agents.append(li.find('a').text)
         
         return user_agents
 
     def test_proxy(self,proxy):
-
+        for userAgent in self.get_random_user_agents(5):
             response = requests.get(
                 'https://www.avito.ru/moskva/kvartiry/sdam/na_dlitelnyy_srok-ASgBAgICAkSSA8gQ8AeQUg?f=ASgBAgICA0SSA8gQ8AeQUsDBDbr9Nw&localPriority=0&s=104&user=1',
                 proxies=proxy,
-                headers={'User-Agent':'Mozilla/5.0 (Linux; arm_64; Android 10; MI 9) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.121 YaApp_Android/20.90.0 YaSearchBrowser/20.90.0 BroPP/1.0 SA/3 TA/7.1 Mobile '}
+                headers={'User-Agent':userAgent}
             )
             soup = BeautifulSoup(response.text, 'lxml')
             if soup.find('title').text == 'Доступ ограничен: проблема с IP':
-                return False
+                continue
             else:
                 return True
+        
+        return False
 
     def get_free_proxy_list_net(self):
         proxies = {}
