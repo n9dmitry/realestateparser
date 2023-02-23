@@ -20,7 +20,7 @@ class get_proxy():
         return user_agents
 
     def test_proxy(self,proxy):
-        for userAgent in self.get_random_user_agents(5):
+
             response = requests.get(
                 'https://www.avito.ru/moskva/kvartiry/sdam/na_dlitelnyy_srok-ASgBAgICAkSSA8gQ8AeQUg?f=ASgBAgICA0SSA8gQ8AeQUsDBDbr9Nw&localPriority=0&s=104&user=1',
                 proxies=proxy,
@@ -28,11 +28,9 @@ class get_proxy():
             )
             soup = BeautifulSoup(response.text, 'lxml')
             if soup.find('title').text == 'Доступ ограничен: проблема с IP':
-                continue
+                return False
             else:
                 return True
-            
-        return False
 
     def get_free_proxy_list_net(self):
         proxies = {}
