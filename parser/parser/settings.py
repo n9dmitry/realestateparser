@@ -14,7 +14,6 @@ from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 from django.urls import reverse
-from parserAvitoCian import views
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -130,4 +129,4 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-LOGIN_REDIRECT_URL = reverse(views.go)
+LOGIN_REDIRECT_URL = '/'
