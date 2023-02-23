@@ -2,19 +2,42 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="../../static/css/index.css">
     <title>Title</title>
 </head>
 <body>
-    {% for item in all_Advertisment %}
-        {{ item.url }}<br>
-        {{ item.title }}<br>
-        {{ item.price }}<br>
-        {{ item.phone }}<br>
-        {{ item.appartment_square }}<br>
-        {{ item.appartment_floor }}<br>
-        {{ item.floors_count }}<br>
-        {{ item.marketing_source }}<br>
-        {{ item.date }}<br>
-    {% endfor %}
+<table>
+		<thead>
+			<tr>
+				<th>Название</th>
+				<th>Цена</th>
+				<th>Телефон</th>
+				<th>Этаж</th>
+				<th>Источник</th>
+				<th>Время</th>
+				<th>URL ссылка</th>
+			</tr>
+		</thead>
+		<tbody>
+            {% for item in all_Advertisment %}
+            <tr>
+                  <td class="yellow-background">{{ item.title }}<br></td>
+                  <td class="yellow-background">{{ item.price }} ₽ <br></td>
+                  <td class="yellow-background"><a href="{{ item.phone }}">{{ item.phone }}<br></a></td>
+                  <td class="yellow-background">{{ item.appartment_floor }} / {{ item.floors_count }}<br></td>
+                  <td class="yellow-background">{{ item.marketing_source }}<br></td>
+                  <td class="yellow-background">{{ item.date|date:"H:i, d/m/Y" }}<br></td>
+                  <td class="yellow-background"><a href="{{ item.url }}">{{ item.url }}<br></a></td>
+            </tr>
+            {% endfor %}
+
+        </tbody>
+</table>
+    <div>
+
+    </div>
+
+
+
 </body>
 </html>
