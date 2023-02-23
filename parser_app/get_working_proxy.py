@@ -24,7 +24,7 @@ class get_proxy():
             response = requests.get(
                 'https://www.avito.ru/moskva/kvartiry/sdam/na_dlitelnyy_srok-ASgBAgICAkSSA8gQ8AeQUg?f=ASgBAgICA0SSA8gQ8AeQUsDBDbr9Nw&localPriority=0&s=104&user=1',
                 proxies=proxy,
-                headers={'User-Agent':userAgent}
+                headers={'User-Agent':'Mozilla/5.0 (Linux; arm_64; Android 10; MI 9) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.121 YaApp_Android/20.90.0 YaSearchBrowser/20.90.0 BroPP/1.0 SA/3 TA/7.1 Mobile '}
             )
             soup = BeautifulSoup(response.text, 'lxml')
             if soup.find('title').text == 'Доступ ограничен: проблема с IP':
