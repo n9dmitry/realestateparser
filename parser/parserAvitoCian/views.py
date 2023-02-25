@@ -3,6 +3,7 @@ django.setup()
 from django.http import HttpResponse
 from django.shortcuts import render
 from .models import *
+from django.views.decorators.csrf import csrf_exempt
 
 def all_Advertisment(request):
     adds = Advertisement.objects.all()
@@ -13,7 +14,7 @@ def all_Advertisment(request):
         }
     )
 
-
+@csrf_exempt
 def request_proceed(request):
     adv_item = Advertisement(
         date=request.POST['date'],
