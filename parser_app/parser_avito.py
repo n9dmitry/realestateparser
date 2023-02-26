@@ -5,18 +5,33 @@ import tzlocal
 import pytz
 import re
 
+import pytesseract
+import cv2
+import matplotlib.pyplot as plt
+from PIL import Image
+
+from multiprocessing import Pool
+
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-import time
 from fake_useragent import UserAgent
+
+def get_text_on_image(src):
+    image = Image.open(src)
+    string = pytesseract.image_to_string(image)
+    print(string)
+
 
 def get_url_image():
     useragent = UserAgent()
     options = webdriver.FirefoxOptions()
 
+    print('Установка фонового режима...')
     options.headless = True
 
+    print('Отключение режима веб-драйвера')
     options.set_preference('dom.webdriver.enabled', False)
+    print('Установка рандомного юзер-агента...')
     options.set_preference('general.useragent.override', useragent.random)
 
     url = 'https://www.avito.ru/moskva/kvartiry/sdam/na_dlitelnyy_srok-ASgBAgICAkSSA8gQ8AeQUg?f=ASgBAgICA0SSA8gQ8AeQUsDBDbr9Nw&localPriority=0&p=1&s=104&user=1'
@@ -25,9 +40,14 @@ def get_url_image():
     executable_path='/home/denis/Рабочий стол/Projects/celenium/firefoxdriver/geckodriver',
     options=options,
     )   
-
+    print('Получние страницы...')
     browser.get(url)
+    print('Нахождение кнопки и нажатие на неё...')
+    browser.find_element(By.CLASS_NAME, 'button-button-eBrUW button-button_phone-_Yo3v button-button-CmK9a button-size-s-r9SeD button-default-_Uj_C').click()
+    print('Получение ссылки...')
+    src = browser.find_element(By.CLASS_NAME, 'button-phone-image-LkzoU').get_attribute('src')
 
+    return src
 
 def get_target_date_ad(ad):
 
@@ -117,19 +137,22 @@ headers = {
     'Accept-Language': 'ru-RU,ru;q=0.8,en-US;q=0.5,en;q=0.3'
 }
 
-page = requests.get('https://www.avito.ru/moskva/kvartiry/sdam/na_dlitelnyy_srok-ASgBAgICAkSSA8gQ8AeQUg?f=ASgBAgICA0SSA8gQ8AeQUsDBDbr9Nw&localPriority=0&s=104&user=1', headers=headers)
-soup = BeautifulSoup(page.text, 'lxml')
-
-for i, item in enumerate(get_data_on_adds(soup)):
-    print(f'\nОбъявление номер:{i+1}\n')
-    print('title: ' + item['title'])
-    print('appartment_square: ' + item['appartment_square'])
-    print('date: ' + item['date'])
-    print('url_data: ' + item['url_data'])
-    print('price: ' + item['price'])
-    print('appartment_square: ' + item['appartment_square'])
-    print('appartment_floor: ' + item['appartment_floor'])
-    print('floors_count: ' + item['floors_count'])
-    print('marketing_source: ' + str(item['marketing_source']))
 
 
+if __name__ == '__main__':
+    # page = requests.get('https://www.avito.ru/moskva/kvartiry/sdam/na_dlitelnyy_srok-ASgBAgICAkSSA8gQ8AeQUg?f=ASgBAgICA0SSA8gQ8AeQUsDBDbr9Nw&localPriority=0&s=104&user=1', headers=headers)
+    # soup = BeautifulSoup(page.text, 'lxml')
+
+    get_text_on_image('index.png')
+
+    # for i, item in enumerate(get_data_on_adds(soup)):
+    #     print(f'\nОбъявление номер:{i+1}\n')
+    #     print('title: ' + item['title'])
+    #     print('appartment_square: ' + item['appartment_square'])
+    #     print('date: ' + item['date'])
+    #     print('url_data: ' + item['url_data'])
+    #     print('price: ' + item['price'])
+    #     print('appartment_square: ' + item['appartment_square'])
+    #     print('appartment_floor: ' + item['appartment_floor'])
+    #     print('floors_count: ' + item['floors_count'])
+    #     print('marketing_source: ' + str(item['marketing_source']))
