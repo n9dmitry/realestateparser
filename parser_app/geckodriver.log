@@ -1,0 +1,16 @@
+1677410627148	geckodriver	INFO	Listening on 127.0.0.1:38941
+1677410627656	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-headless" "--remote-debugging-port" "45461" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofilewqmEgj"
+*** You are running in headless mode.
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+1677410628209	Marionette	INFO	Marionette enabled
+1677410628213	Marionette	INFO	Listening on port 45061
+Read port: 45061
+WebDriver BiDi listening on ws://127.0.0.1:45461
+1677410628401	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
+console.error: ({})
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofilewqmEgj/search.json.mozlz4", (void 0)))
+DevTools listening on ws://127.0.0.1:45461/devtools/browser/c3cfec12-f406-4f40-9eb4-2dd0d10e979b
+JavaScript warning: https://www.avito.ru/dstatic/build/client/f.1e710977400fd6bab6de.js, line 6: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: https://www.avito.ru/moskva/kvartiry/sdam/na_dlitelnyy_srok-ASgBAgICAkSSA8gQ8AeQUg?f=ASgBAgICA0SSA8gQ8AeQUsDBDbr9Nw&localPriority=0&p=1&s=104&user=1 line 307 > injectedScript, line 1: TypeError: RTRG_ID[i] is undefined
