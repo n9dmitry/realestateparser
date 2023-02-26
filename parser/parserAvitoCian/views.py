@@ -16,16 +16,23 @@ def all_Advertisment(request):
 
 @csrf_exempt
 def request_proceed(request):
-    adv_item = Advertisement(
-        date=request.POST['date'],
-        phone=request.POST['phone'],
-        url=request.POST['url'],
-        title=request.POST['title'],
-        price=request.POST['price'],
-        appartment_square=request.POST['appartment_square'],
-        appartment_floor=request.POST['appartment_floor'],
-        floors_count=request.POST['floors_count'],
-        marketing_source=request.POST['marketing_source'],
-    )
-    adv_item.save()
-    return HttpResponse('...')
+
+    if request.method == 'POST':
+        source_item = Source.objects.get(id=int(request.POST['marketing_source']))
+        adv_item = Advertisement(
+            date=request.POST['date'],
+            phone=request.POST['phone'],
+            url=request.POST['url'],
+            title=request.POST['title'],
+            price=request.POST['price'],
+            appartment_square=request.POST['appartment_square'],
+            appartment_floor=request.POST['appartment_floor'],
+            floors_count=request.POST['floors_count'],
+            marketing_source=source_item,
+        )
+
+        adv_item.save()
+
+        return HttpResponse('...')
+
+

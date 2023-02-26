@@ -16,12 +16,6 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from fake_useragent import UserAgent
 
-def get_text_on_image(src):
-    image = Image.open(src)
-    string = pytesseract.image_to_string(image)
-    print(string)
-
-
 def get_url_image():
     useragent = UserAgent()
     options = webdriver.FirefoxOptions()
@@ -40,7 +34,7 @@ def get_url_image():
     executable_path='/home/denis/Рабочий стол/Projects/celenium/firefoxdriver/geckodriver',
     options=options,
     )   
-    print('Получние страницы...')
+
     browser.get(url)
     print('Нахождение кнопки и нажатие на неё...')
     browser.find_element(By.CLASS_NAME, 'button-button-eBrUW button-button_phone-_Yo3v button-button-CmK9a button-size-s-r9SeD button-default-_Uj_C').click()
@@ -53,7 +47,7 @@ def get_target_date_ad(ad):
 
     local_timezone = tzlocal.get_localzone()
     date_now = datetime.now(pytz.utc)
-   
+
     time = ad.find('div', {'class':'date-text-KmWDf text-text-LurtD text-size-s-BxGpL text-color-noaccent-P1Rfs'}).text
     time_split = time.split(' ')
 
@@ -88,7 +82,7 @@ def get_adds(soup):
     for ad in all_ad:
         res.append(ad)
     return res
-        
+
 
 def get_data_on_adds(soup):
     res = []
@@ -97,22 +91,22 @@ def get_data_on_adds(soup):
 
     for ad in adds:
         if test_ad_on_time(ad):
-           
+
             date = str(get_target_date_ad(ad))
             url_data = ad.find('a', {'class':'link-link-MbQDP link-design-default-_nSbv title-root-zZCwT iva-item-title-py3i_ title-listRedesign-_rejR title-root_maxHeight-X6PsH'})['href']
             title = ad.find('h3', {'class':'title-root-zZCwT iva-item-title-py3i_ title-listRedesign-_rejR title-root_maxHeight-X6PsH text-text-LurtD text-size-s-BxGpL text-bold-SinUO'}).text
             price = ad.find('span', {'class':'price-text-_YGDY'}).text
 
             appartment_square = re.search(r'\d{1,4},\d м²',ad.find('h3', {'class':'title-root-zZCwT iva-item-title-py3i_ title-listRedesign-_rejR title-root_maxHeight-X6PsH text-text-LurtD text-size-s-BxGpL text-bold-SinUO'}).text)
-            
+
             if type(appartment_square) == type(None):
-                
+
                 appartment_square = re.search(r'\d{1,4} м²',ad.find('h3', {'class':'title-root-zZCwT iva-item-title-py3i_ title-listRedesign-_rejR title-root_maxHeight-X6PsH text-text-LurtD text-size-s-BxGpL text-bold-SinUO'}).text)
 
             appartment_square = appartment_square[0]
 
             floors_count = (re.search(r'\/\d{1,3}',ad.find('h3', {'class':'title-root-zZCwT iva-item-title-py3i_ title-listRedesign-_rejR title-root_maxHeight-X6PsH text-text-LurtD text-size-s-BxGpL text-bold-SinUO'}).text)[0])[-1:]
-        
+
             appartment_floor = (re.search(r'\d{1,3}\/',ad.find('h3', {'class':'title-root-zZCwT iva-item-title-py3i_ title-listRedesign-_rejR title-root_maxHeight-X6PsH text-text-LurtD text-size-s-BxGpL text-bold-SinUO'}).text)[0])[:-1]
             marketing_source = 1
 
@@ -139,20 +133,3 @@ headers = {
 
 
 
-if __name__ == '__main__':
-    # page = requests.get('https://www.avito.ru/moskva/kvartiry/sdam/na_dlitelnyy_srok-ASgBAgICAkSSA8gQ8AeQUg?f=ASgBAgICA0SSA8gQ8AeQUsDBDbr9Nw&localPriority=0&s=104&user=1', headers=headers)
-    # soup = BeautifulSoup(page.text, 'lxml')
-
-    get_text_on_image('index.png')
-
-    # for i, item in enumerate(get_data_on_adds(soup)):
-    #     print(f'\nОбъявление номер:{i+1}\n')
-    #     print('title: ' + item['title'])
-    #     print('appartment_square: ' + item['appartment_square'])
-    #     print('date: ' + item['date'])
-    #     print('url_data: ' + item['url_data'])
-    #     print('price: ' + item['price'])
-    #     print('appartment_square: ' + item['appartment_square'])
-    #     print('appartment_floor: ' + item['appartment_floor'])
-    #     print('floors_count: ' + item['floors_count'])
-    #     print('marketing_source: ' + str(item['marketing_source']))
