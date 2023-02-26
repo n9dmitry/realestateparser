@@ -10,6 +10,9 @@ from selenium.webdriver.common.by import By
 import time
 from fake_useragent import UserAgent
 
+
+
+
 def get_url_image():
     useragent = UserAgent()
     options = webdriver.FirefoxOptions()
@@ -24,7 +27,7 @@ def get_url_image():
     browser = webdriver.Firefox(
     executable_path='/home/denis/Рабочий стол/Projects/celenium/firefoxdriver/geckodriver',
     options=options,
-    )   
+    )
 
     browser.get(url)
 
@@ -33,7 +36,7 @@ def get_target_date_ad(ad):
 
     local_timezone = tzlocal.get_localzone()
     date_now = datetime.now(pytz.utc)
-   
+
     time = ad.find('div', {'class':'date-text-KmWDf text-text-LurtD text-size-s-BxGpL text-color-noaccent-P1Rfs'}).text
     time_split = time.split(' ')
 
@@ -68,7 +71,7 @@ def get_adds(soup):
     for ad in all_ad:
         res.append(ad)
     return res
-        
+
 
 def get_data_on_adds(soup):
     res = []
@@ -77,22 +80,22 @@ def get_data_on_adds(soup):
 
     for ad in adds:
         if test_ad_on_time(ad):
-           
+
             date = str(get_target_date_ad(ad))
             url_data = ad.find('a', {'class':'link-link-MbQDP link-design-default-_nSbv title-root-zZCwT iva-item-title-py3i_ title-listRedesign-_rejR title-root_maxHeight-X6PsH'})['href']
             title = ad.find('h3', {'class':'title-root-zZCwT iva-item-title-py3i_ title-listRedesign-_rejR title-root_maxHeight-X6PsH text-text-LurtD text-size-s-BxGpL text-bold-SinUO'}).text
             price = ad.find('span', {'class':'price-text-_YGDY'}).text
 
             appartment_square = re.search(r'\d{1,4},\d м²',ad.find('h3', {'class':'title-root-zZCwT iva-item-title-py3i_ title-listRedesign-_rejR title-root_maxHeight-X6PsH text-text-LurtD text-size-s-BxGpL text-bold-SinUO'}).text)
-            
+
             if type(appartment_square) == type(None):
-                
+
                 appartment_square = re.search(r'\d{1,4} м²',ad.find('h3', {'class':'title-root-zZCwT iva-item-title-py3i_ title-listRedesign-_rejR title-root_maxHeight-X6PsH text-text-LurtD text-size-s-BxGpL text-bold-SinUO'}).text)
 
             appartment_square = appartment_square[0]
 
             floors_count = (re.search(r'\/\d{1,3}',ad.find('h3', {'class':'title-root-zZCwT iva-item-title-py3i_ title-listRedesign-_rejR title-root_maxHeight-X6PsH text-text-LurtD text-size-s-BxGpL text-bold-SinUO'}).text)[0])[-1:]
-        
+
             appartment_floor = (re.search(r'\d{1,3}\/',ad.find('h3', {'class':'title-root-zZCwT iva-item-title-py3i_ title-listRedesign-_rejR title-root_maxHeight-X6PsH text-text-LurtD text-size-s-BxGpL text-bold-SinUO'}).text)[0])[:-1]
             marketing_source = 1
 
@@ -131,5 +134,3 @@ for i, item in enumerate(get_data_on_adds(soup)):
     print('appartment_floor: ' + item['appartment_floor'])
     print('floors_count: ' + item['floors_count'])
     print('marketing_source: ' + str(item['marketing_source']))
-
-

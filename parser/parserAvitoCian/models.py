@@ -17,4 +17,4 @@ class Advertisement(models.Model):
     appartment_square = models.FloatField()
     appartment_floor = models.IntegerField()
     floors_count = models.IntegerField()
-    marketing_source = models.ForeignKey(Source, on_delete = models.CASCADE)
+    marketing_source = models.ForeignKey(Source, on_delete = models.CASCADE, null=True, blank=True)
