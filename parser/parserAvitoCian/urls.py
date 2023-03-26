@@ -4,6 +4,6 @@ from . import views
 from .views import request_proceed
 
 urlpatterns = [
-    path('', views.all_Advertisment),
+    path('', views.all_Advertisment, name='all_adds'),
     path('request_proceed/', request_proceed, name='request_proceed')
 ]

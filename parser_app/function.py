@@ -10,4 +10,5 @@ def convert_image_to_string(png):
     pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
     string = pytesseract.image_to_string(image)
     print(string)
+    
 convert_image_to_string('media/test.png')

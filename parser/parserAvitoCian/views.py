@@ -3,6 +3,7 @@ django.setup()
 from django.http import HttpResponse
 from django.shortcuts import render
 from .models import *
+from django.shortcuts import redirect
 from django.views.decorators.csrf import csrf_exempt
 
 def all_Advertisment(request):
@@ -16,23 +17,21 @@ def all_Advertisment(request):
 
 @csrf_exempt
 def request_proceed(request):
-
+    print(request.POST)
     if request.method == 'POST':
         source_item = Source.objects.get(id=int(request.POST['marketing_source']))
-        adv_item = Advertisement(
-            date=request.POST['date'],
-            phone=request.POST['phone'],
-            url=request.POST['url'],
-            title=request.POST['title'],
-            price=request.POST['price'],
-            appartment_square=request.POST['appartment_square'],
-            appartment_floor=request.POST['appartment_floor'],
-            floors_count=request.POST['floors_count'],
-            marketing_source=source_item,
-        )
+        if not Advertisement.objects.filter(title=request.POST['title'], price=request.POST['price']).exists():
+            adv_item = Advertisement(
+                date=request.POST['date'],
+                phone=request.POST['phone'],
+                url=request.POST['url'],
+                title=request.POST['title'],
+                price=request.POST['price'],
+                marketing_source=source_item,
+            )
 
-        adv_item.save()
+            adv_item.save()
 
-        return HttpResponse('...')
+        return redirect('all_adds')
 
 
