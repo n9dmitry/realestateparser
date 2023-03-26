@@ -97,12 +97,10 @@ def get_target_date_ad(ad):
     time = ad.find('div', {'class':'date-text-KmWDf text-text-LurtD text-size-s-BxGpL text-color-noaccent-P1Rfs'}).text
     time_split = time.split(' ')
 
-    if time_split[1] == 'часа' or time_split[1] == 'час' or time_split[1] == 'часов':
-        return datetime.now() - timedelta(hours=int(time_split[0]))
-    elif time_split[1] == 'минут' or time_split[1] == 'минуту' or time_split[1] == 'минуты':
-        return datetime.now()- timedelta(minutes=int(time_split[0]))
-    else:
-        return False
+    if 'час' in time_split[1]:
+        return datetime.now() - timedelta(hours=int(time_split[0])) - timedelta(hours=3)
+    elif 'мин' in time_split[1]:
+        return datetime.now()- timedelta(minutes=int(time_split[0])) - timedelta(hours=3)
 
 # returns: <bool>
 def test_ad_on_time(ad):
